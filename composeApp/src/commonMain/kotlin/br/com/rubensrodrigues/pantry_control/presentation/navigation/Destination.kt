@@ -1,4 +1,4 @@
-package br.com.rubensrodrigues.pantry_control.navigation
+package br.com.rubensrodrigues.pantry_control.presentation.navigation
 
 import androidx.navigation3.runtime.NavKey
 import androidx.savedstate.serialization.SavedStateConfiguration
