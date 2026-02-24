@@ -6,5 +6,11 @@ import androidx.compose.runtime.Composable
 expect fun VoiceRecorderEffect(
     isPressed: Boolean,
     onRecordingStateChanged: (isRecording: Boolean) -> Unit,
-    onFilePathReady: (filePath: String?) -> Unit
+    onFilePathReady: (result: FileResult?) -> Unit
+)
+
+data class FileResult(
+    val filename: String,
+    val absolutePath: String,
+    val bytes: ByteArray,
 )

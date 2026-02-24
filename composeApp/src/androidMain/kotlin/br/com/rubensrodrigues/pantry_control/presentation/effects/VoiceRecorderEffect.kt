@@ -17,7 +17,7 @@ import java.io.File
 actual fun VoiceRecorderEffect(
     isPressed: Boolean,
     onRecordingStateChanged: (isRecording: Boolean) -> Unit,
-    onFilePathReady: (filePath: String?) -> Unit
+    onFilePathReady: (result: FileResult?) -> Unit
 ) {
     val context = LocalContext.current
     val audioRecorder = remember { AudioRecorder(context) }
@@ -49,7 +49,13 @@ actual fun VoiceRecorderEffect(
         if (isRecording) {
             val file = File(context.cacheDir, "voice_memo.mp3").also {
                 audioFile = it
-                onFilePathReady(it.absolutePath)
+                onFilePathReady(
+                    FileResult(
+                        filename = it.name,
+                        absolutePath = it.absolutePath,
+                        bytes = it.readBytes(),
+                    )
+                )
             }
             audioRecorder.start(file)
         } else {

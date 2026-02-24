@@ -32,7 +32,7 @@ fun VoiceButtonPage() {
     VoiceRecorderEffect(
         isPressed = isPressed,
         onRecordingStateChanged = { isRecording = it },
-        onFilePathReady = { audioFilePath = it }
+        onFilePathReady = { result -> audioFilePath = result?.filename }
     )
 
     Scaffold {
