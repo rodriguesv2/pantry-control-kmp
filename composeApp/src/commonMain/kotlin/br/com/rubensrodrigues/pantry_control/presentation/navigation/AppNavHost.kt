@@ -6,7 +6,8 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.ui.NavDisplay
-import br.com.rubensrodrigues.pantry_control.presentation.features.page.VoiceButtonPage
+import br.com.rubensrodrigues.pantry_control.presentation.features.page.voicebutton.VoiceButtonPage
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun AppNavHost() {
@@ -17,7 +18,7 @@ fun AppNavHost() {
         onBack = { backStackList.removeLastOrNull() },
         entryProvider = { key ->
             when (key) {
-                Destination.VoiceButton -> NavEntry(key) { VoiceButtonPage() }
+                Destination.VoiceButton -> NavEntry(key) { VoiceButtonPage(koinViewModel()) }
                 Destination.Items -> NavEntry(key) { Text("Item") }
             }
         }

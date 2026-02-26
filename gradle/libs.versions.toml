@@ -19,6 +19,7 @@ multiplatform-nav3-ui = "1.0.0-alpha06"
 compose-multiplatform-adaptive = "1.3.0-alpha03"
 compose-multiplatform-lifecycle = "2.10.0-alpha07"
 koin-bom = "4.1.1"
+datetime = "0.7.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -53,6 +54,7 @@ koin-android = { module = "io.insert-koin:koin-android" }
 koin-compose = { module = "io.insert-koin:koin-compose" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel" }
 koin-ktor = { module = "io.insert-koin:koin-ktor" }
+datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -60,6 +60,8 @@ kotlin {
             implementation(libs.koin.ktor)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose)
+
+            implementation(libs.datetime)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
