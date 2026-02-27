@@ -14,6 +14,7 @@ import org.koin.dsl.module
 val networkModule = module {
     single {
         HttpClient(CIO) {
+            expectSuccess = true
             defaultRequest {
                 url("https://api-pantry-control.rodroid.com.br/")
             }

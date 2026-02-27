@@ -18,8 +18,13 @@ fun AppNavHost() {
         onBack = { backStackList.removeLastOrNull() },
         entryProvider = { key ->
             when (key) {
-                Destination.VoiceButton -> NavEntry(key) { VoiceButtonPage(koinViewModel()) }
-                Destination.Items -> NavEntry(key) { Text("Item") }
+                Destination.VoiceButton -> NavEntry(key) {
+                    VoiceButtonPage(
+                        viewModel = koinViewModel(),
+                        goToListCallback = { items -> backStackList.add(Destination.Items(items)) }
+                    )
+                }
+                is Destination.Items -> NavEntry(key) { Text(key.items.toString()) }
             }
         }
     )

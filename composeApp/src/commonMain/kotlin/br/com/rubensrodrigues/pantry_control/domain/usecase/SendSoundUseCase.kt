@@ -9,7 +9,7 @@ interface SendSoundUseCase {
     suspend operator fun invoke(
         fileName: String,
         soundBytes: ByteArray,
-    ): List<ItemEntity>
+    ): Result<List<ItemEntity>>
 }
 
 class SendSoundUseCaseImpl(
@@ -18,24 +18,26 @@ class SendSoundUseCaseImpl(
     override suspend fun invoke(
         fileName: String,
         soundBytes: ByteArray,
-    ): List<ItemEntity> {
-        val response = apiRepository.sendAudio(
-            fileName = fileName,
-            bytes = soundBytes,
-        )
+    ): Result<List<ItemEntity>> {
+        return runCatching {
+            val response = apiRepository.sendAudio(
+                fileName = fileName,
+                bytes = soundBytes,
+            )
 
-        return response
-            .items
-            .map { item ->
-                ItemEntity(
-                    name = item.name,
-                    quantity = item.quantity,
-                    unit = item.unit,
-                    category = item.category,
-                    expirationDate = item
-                        .expirationDate
-                        ?.toInstant(Constants.Date.EXPIRATION),
-                )
-            }
+            response
+                .items
+                .map { item ->
+                    ItemEntity(
+                        name = item.name,
+                        quantity = item.quantity,
+                        unit = item.unit,
+                        category = item.category,
+                        expirationDate = item
+                            .expirationDate
+                            ?.toInstant(Constants.Date.EXPIRATION),
+                    )
+                }
+        }
     }
 }
