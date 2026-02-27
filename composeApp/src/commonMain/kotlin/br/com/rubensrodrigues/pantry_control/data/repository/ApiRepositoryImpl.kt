@@ -17,7 +17,7 @@ class ApiRepositoryImpl(
         bytes: ByteArray
     ): AudioAnalyzedResponse {
         val response = client.submitFormWithBinaryData(
-            url = "/pantry/analyze-audio",
+            url = "/api/v1/pantry/analyze-audio",
             formData = formData {
                 append(
                     key = "file",

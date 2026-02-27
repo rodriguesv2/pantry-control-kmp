@@ -1,6 +1,7 @@
 package br.com.rubensrodrigues.pantry_control.presentation.effects
 
 import android.Manifest
+import android.icu.util.Calendar
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
@@ -47,19 +48,26 @@ actual fun VoiceRecorderEffect(
     LaunchedEffect(isRecording) {
         onRecordingStateChanged(isRecording)
         if (isRecording) {
-            val file = File(context.cacheDir, "voice_memo.mp3").also {
-                audioFile = it
-                onFilePathReady(
-                    FileResult(
-                        filename = it.name,
-                        absolutePath = it.absolutePath,
-                        bytes = it.readBytes(),
-                    )
-                )
+            val filename = Calendar.getInstance().timeInMillis.toString()
+            val file = File(context.cacheDir, "$filename.mp3")
+            if (file.exists()) {
+                file.delete()
             }
+            audioFile = file
+            onFilePathReady(null)
             audioRecorder.start(file)
         } else {
-            onFilePathReady(null)
+            audioFile?.let {
+                if (it.exists()) {
+                    onFilePathReady(
+                        FileResult(
+                            filename = it.name,
+                            absolutePath = it.absolutePath,
+                            bytes = it.readBytes(),
+                        )
+                    )
+                }
+            }
         }
     }
 }

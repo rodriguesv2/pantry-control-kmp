@@ -1,10 +1,12 @@
 package br.com.rubensrodrigues.pantry_control.presentation.features.page.voicebutton
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import br.com.rubensrodrigues.pantry_control.domain.usecase.SendSoundUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class VoiceButtonViewModel(
     private val sendSoundUseCase: SendSoundUseCase
@@ -28,6 +30,12 @@ class VoiceButtonViewModel(
     }
 
     fun sendAudio() {
-        //
+        println("ViewModel.SendAudio - Passou aqui")
+        viewModelScope.launch {
+            sendSoundUseCase(
+                fileName = uiState.value.fileName ?: "",
+                soundBytes = uiState.value.fileBytes ?: byteArrayOf()
+            )
+        }
     }
 }

@@ -3,7 +3,6 @@ package br.com.rubensrodrigues.pantry_control.presentation.features.page.voicebu
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,12 +21,6 @@ fun VoiceButtonPage(
     val isPressed by interactionSource.collectIsPressedAsState()
     var isRecording by remember { mutableStateOf(false) }
 
-    LaunchedEffect(isPressed) {
-        if (!isPressed && uiState.fileAbsolutePath != null) {
-            viewModel.sendAudio()
-        }
-    }
-
     VoiceRecorderEffect(
         isPressed = isPressed,
         onRecordingStateChanged = { isRecording = it },
@@ -37,6 +30,9 @@ fun VoiceButtonPage(
                 absolutePath = result?.absolutePath,
                 fileBytes = result?.bytes,
             )
+            if (result != null) {
+                viewModel.sendAudio()
+            }
         }
     )
 
